@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation Problem Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            position: relative;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        main {
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #007BFF;
+        }
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Transportation Problem Project</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#calculators">Calculators</a>
+            <div class="dropdown-content">
+                <a href="nwcm.html">North-West Corner Method</a>
+                <a href="leastcost.html">Least Cost Method</a>
+                <a href="vam.html">Vogel's Approximation Method (VAM)</a>
+                <a href="modi.html">Modified Distribution Method (MODI)</a>
+            </div>
+        </div>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact Us</a>
+    </nav>
+</header>
+
+<main>
+    <div class="container">
+        <h1>Transportation Problem</h1>
+        <p>The <strong>Transportation Problem</strong> is a special type of linear programming problem where the goal is to determine the most efficient way to distribute a product from multiple suppliers (sources) to multiple consumers (destinations) while minimizing the total transportation cost. This problem arises in logistics and supply chain management, helping companies optimize their operations and reduce costs.</p>
+
+        <h2>Key Components of the Transportation Problem:</h2>
+        <ul>
+            <li><strong>Supply (Source):</strong> The total availability of products from each supplier.</li>
+            <li><strong>Demand (Destination):</strong> The required quantity of products at each consumer location.</li>
+            <li><strong>Cost:</strong> The transportation cost from each source to each destination.</li>
+            <li><strong>Objective:</strong> To minimize the overall transportation cost while satisfying both supply and demand constraints.</li>
+        </ul>
+
+        <h2>Methods to Solve the Transportation Problem:</h2>
+
+        <h3><a href="nwcm.html">1. North-West Corner Method</a></h3>
+        <p>This is a basic and straightforward method that begins with the top-left (north-west) cell of the transportation matrix. Here's how it works:</p>
+        <ul>
+            <li>Start allocating as much as possible to the north-west corner.</li>
+            <li>Move to the next cell in the row or column and continue until all supply and demand constraints are satisfied.</li>
+            <li>It provides an initial feasible solution but doesn't guarantee the optimal solution.</li>
+        </ul>
+
+        <h3><a href="leastcost.html">2. Least Cost Method</a></h3>
+        <p>This method aims to reduce transportation costs right from the start:</p>
+        <ul>
+            <li>Allocate as much as possible to the cell with the least transportation cost.</li>
+            <li>After allocating, adjust the supply and demand, then move to the next least-cost cell.</li>
+            <li>Repeat the process until all supply and demand are met. This method generally leads to a better initial solution compared to the North-West Corner method.</li>
+        </ul>
+
+        <h3><a href="vam.html">3. Vogel’s Approximation Method (VAM)</a></h3>
+        <p>Vogel’s method is one of the most efficient methods for finding a good initial feasible solution:</p>
+        <ul>
+            <li>For each row and column, calculate the penalty, which is the difference between the lowest and second-lowest costs.</li>
+            <li>Select the row or column with the highest penalty and allocate as much as possible to the lowest-cost cell in that row/column.</li>
+            <li>Continue until all the supply and demand constraints are satisfied. VAM usually provides a near-optimal solution.</li>
+        </ul>
+
+        <h3><a href="modi.html">4. Modified Distribution Method (MODI Method)</a></h3>
+        <p>The MODI method is used after finding an initial feasible solution (using one of the above methods) to check for optimality:</p>
+        <ul>
+            <li>Calculate the opportunity cost for non-basic cells.</li>
+            <li>If all opportunity costs are non-negative, the solution is optimal.</li>
+            <li>If there are negative opportunity costs, adjust the allocations to reduce the total cost.</li>
+            <li>Continue this process iteratively until the optimal solution is found.</li>
+        </ul>
+    </div>
+</main>
+
+<footer>
+    This site is created by Chandra Ketu and Aman Kaushik.
+</footer>
+
+</body>
+</html>
