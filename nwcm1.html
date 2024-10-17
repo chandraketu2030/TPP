@@ -1,0 +1,263 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            position: relative;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+        }
+        input {
+            width: 50px;
+        }
+        button {
+            margin-top: 20px;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Transportation Problem Project</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="nwcm.html">Methods</a>
+            <div class="dropdown-content">
+                <a href="nwcm.html">North-West Corner Method</a>
+                <a href="leastcost.html">Least Cost Method</a>
+                <a href="vam.html">Vogel's Approximation Method (VAM)</a>
+                <a href="modi.html">Modified Distribution Method (MODI)</a>
+            </div>
+        </div>
+       <a href="https://github.com/chandraketu2030/TPP">Download Code</a>
+        <a href="contact.html">Contact Us</a>
+    </nav>
+</header>
+
+<main>
+    <h1>North-West Corner Method</h1>
+    <h2>Input Data</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>D1</th>
+            <th>D2</th>
+            <th>D3</th>
+            <th>D4</th>
+            <th>Supply</th>
+        </tr>
+        <tr>
+            <th>S1</th>
+            <td><input type="number" id="costS1D1" value="19"></td>
+            <td><input type="number" id="costS1D2" value="30"></td>
+            <td><input type="number" id="costS1D3" value="50"></td>
+            <td><input type="number" id="costS1D4" value="7"></td>
+            <td><input type="number" id="supplyS1" value="10"></td>
+        </tr>
+        <tr>
+            <th>S2</th>
+            <td><input type="number" id="costS2D1" value="70"></td>
+            <td><input type="number" id="costS2D2" value="30"></td>
+            <td><input type="number" id="costS2D3" value="40"></td>
+            <td><input type="number" id="costS2D4" value="60"></td>
+            <td><input type="number" id="supplyS2" value="60"></td>
+        </tr>
+        <tr>
+            <th>S3</th>
+            <td><input type="number" id="costS3D1" value="40"></td>
+            <td><input type="number" id="costS3D2" value="8"></td>
+            <td><input type="number" id="costS3D3" value="70"></td>
+            <td><input type="number" id="costS3D4" value="20"></td>
+            <td><input type="number" id="supplyS3" value="18"></td>
+        </tr>
+        <tr>
+            <th>Demand</th>
+            <td><input type="number" id="demandD1" value="5"></td>
+            <td><input type="number" id="demandD2" value="8"></td>
+            <td><input type="number" id="demandD3" value="7"></td>
+            <td><input type="number" id="demandD4" value="14"></td>
+        </tr>
+    </table>
+
+    <button onclick="solveTransportationProblem()">Solve</button>
+
+    <h2>Solution</h2>
+    <div id="solution"></div>
+    <h2>Calculation Steps</h2>
+    <pre id="steps"></pre>
+</main>
+
+<footer>
+    This Site is created by Chandra Ketu and Aman Kaushik
+</footer>
+
+<script>
+    function solveTransportationProblem() {
+        const supply = [
+            Number(document.getElementById("supplyS1").value),
+            Number(document.getElementById("supplyS2").value),
+            Number(document.getElementById("supplyS3").value)
+        ];
+        
+        const demand = [
+            Number(document.getElementById("demandD1").value),
+            Number(document.getElementById("demandD2").value),
+            Number(document.getElementById("demandD3").value),
+            Number(document.getElementById("demandD4").value)
+        ];
+
+        const costs = [
+            [
+                Number(document.getElementById("costS1D1").value), 
+                Number(document.getElementById("costS1D2").value), 
+                Number(document.getElementById("costS1D3").value), 
+                Number(document.getElementById("costS1D4").value)
+            ],
+            [
+                Number(document.getElementById("costS2D1").value), 
+                Number(document.getElementById("costS2D2").value), 
+                Number(document.getElementById("costS2D3").value), 
+                Number(document.getElementById("costS2D4").value)
+            ],
+            [
+                Number(document.getElementById("costS3D1").value), 
+                Number(document.getElementById("costS3D2").value), 
+                Number(document.getElementById("costS3D3").value), 
+                Number(document.getElementById("costS3D4").value)
+            ]
+        ];
+
+        const allocations = Array.from({ length: supply.length }, () => Array(demand.length).fill(0));
+        const steps = [];
+        let i = 0, j = 0;
+
+        while (i < supply.length && j < demand.length) {
+            const allocation = Math.min(supply[i], demand[j]);
+            allocations[i][j] = allocation;
+            supply[i] -= allocation;
+            demand[j] -= allocation;
+
+            // Log allocation step
+            steps.push(`Step ${steps.length + 1}: Allocate ${allocation} units from S${i + 1} to D${j + 1}.`);
+            steps.push(`Remaining supply at S${i + 1}: ${supply[i]}.`);
+            steps.push(`Remaining demand at D${j + 1}: ${demand[j]}.`);
+
+            // Check if both supply and demand are exhausted
+            if (supply[i] === 0 && demand[j] === 0) {
+                steps.push(`Both supply at S${i + 1} and demand at D${j + 1} are fully satisfied. Moving to the next row and column.\n`);
+                i++;
+                j++;
+            } else if (supply[i] === 0) {
+                steps.push(`Supply at S${i + 1} is exhausted. Moving down to the next source (S${i + 2}).\n`);
+                i++;
+            } else if (demand[j] === 0) {
+                steps.push(`Demand at D${j + 1} is fully satisfied. Moving to the next destination (D${j + 2}).\n`);
+                j++;
+            }
+        }
+
+        // Construct the allocation table in HTML format
+        let result = '<table><tr><th></th><th>D1</th><th>D2</th><th>D3</th><th>D4</th><th>Supply</th></tr>';
+        allocations.forEach((row, rowIndex) => {
+            result += `<tr><th>S${rowIndex + 1}</th>`;
+            row.forEach((value, colIndex) => {
+                result += `<td>${costs[rowIndex][colIndex]} ${value > 0 ? `(${value})` : ''}</td>`;
+            });
+            result += `<td>${supply[rowIndex]}</td></tr>`;
+        });
+        result += `<tr><th>Demand</th><td>${demand[0]}</td><td>${demand[1]}</td><td>${demand[2]}</td><td>${demand[3]}</td><td></td></tr>`;
+        result += '</table>';
+
+        // Calculate the total transportation cost
+        let totalCost = 0;
+        allocations.forEach((row, rowIndex) => {
+            row.forEach((value, colIndex) => {
+                if (value > 0) {
+                    totalCost += value * costs[rowIndex][colIndex];
+                }
+            });
+        });
+
+        // Add the total cost and degeneracy check to the solution section
+        const m = supply.length;
+        const n = demand.length;
+        const allocatedCells = allocations.flat().filter(value => value > 0).length;
+        const isDegenerate = allocatedCells === m + n - 1;
+        result += `<p>The minimum total transportation cost = 19×5 + 30×2 + 30×6 + 40×3 + 70×4 + 20×14 = ${totalCost}</p>`;
+        result += `<p>Here, the number of allocated cells = ${allocatedCells} is equal to m + n - 1 = ${m} + ${n} - 1 = ${m + n - 1}</p>`;
+        result += `<p>∴ This solution is ${isDegenerate ? "non-degenerate" : "degenerate"}.</p>`;
+
+        document.getElementById("solution").innerHTML = result;
+        document.getElementById("steps").textContent = steps.join('\n');
+    }
+</script>
+    
+</body>
+</html>
